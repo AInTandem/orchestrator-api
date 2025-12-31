@@ -1,0 +1,5535 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CreateOrganizationRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderPath": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"folderPath"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateOrganizationRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderPath": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateWorkspaceRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderPath": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"folderPath"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateWorkspaceRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderPath": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateProjectRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderPath": {
+						"type": "string"
+					},
+					"workflowId": {
+						"type": "string"
+					},
+					"aiConfig": {}
+				},
+				"required": [
+					"name",
+					"folderPath"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateProjectRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderPath": {
+						"type": "string"
+					},
+					"sandboxId": {
+						"type": "string"
+					},
+					"sandboxName": {
+						"type": "string"
+					},
+					"workflowState": {},
+					"workflowId": {
+						"type": "string",
+						"nullable": true
+					},
+					"aiConfig": {}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MoveProjectRequest": {
+				"properties": {
+					"newWorkspaceId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"newWorkspaceId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateWorkflowStateRequest": {
+				"properties": {
+					"currentPhaseId": {
+						"type": "string"
+					},
+					"currentStepId": {
+						"type": "string"
+					},
+					"stepStatuses": {}
+				},
+				"required": [
+					"currentPhaseId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateStepStatusRequest": {
+				"properties": {
+					"status": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowLink": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"path": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"phase": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"path",
+					"description",
+					"phase"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowStep": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"process",
+							"milestone",
+							"decision",
+							"documentation"
+						]
+					},
+					"hasExecutableTask": {
+						"type": "boolean"
+					},
+					"qwenCodePrompt": {
+						"type": "string"
+					},
+					"taskFile": {
+						"type": "string"
+					},
+					"taskId": {
+						"type": "string"
+					},
+					"workflows": {
+						"items": {
+							"$ref": "#/components/schemas/WorkflowLink"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"description",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowPhase": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"titleEn": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"color": {
+						"type": "string"
+					},
+					"icon": {
+						"type": "string"
+					},
+					"steps": {
+						"items": {
+							"$ref": "#/components/schemas/WorkflowStep"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"titleEn",
+					"description",
+					"color",
+					"steps"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowTransition": {
+				"properties": {
+					"from": {
+						"type": "string"
+					},
+					"to": {
+						"type": "string"
+					},
+					"label": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"forward",
+							"feedback",
+							"loop"
+						]
+					}
+				},
+				"required": [
+					"from",
+					"to",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowDefinition": {
+				"description": "API Response Types\r\n\r\nDefines the response types for all API endpoints.\r\nThese types are used by TSOA to generate OpenAPI schemas.",
+				"properties": {
+					"phases": {
+						"items": {
+							"$ref": "#/components/schemas/WorkflowPhase"
+						},
+						"type": "array"
+					},
+					"transitions": {
+						"items": {
+							"$ref": "#/components/schemas/WorkflowTransition"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"phases",
+					"transitions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"definition": {
+						"$ref": "#/components/schemas/WorkflowDefinition"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"published",
+							"draft",
+							"archived"
+						]
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"changeDescription": {
+						"type": "string"
+					},
+					"organizationId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"description",
+					"definition",
+					"status",
+					"version",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateWorkflowRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"definition": {}
+				},
+				"required": [
+					"name",
+					"description",
+					"definition"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateWorkflowRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"definition": {},
+					"changeDescription": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChangeWorkflowStatusRequest": {
+				"properties": {
+					"status": {
+						"type": "string",
+						"enum": [
+							"published",
+							"draft",
+							"archived"
+						]
+					}
+				},
+				"required": [
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CloneWorkflowRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowExecutionResponse": {
+				"properties": {
+					"executionId": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"executionId",
+					"status",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Record_string.any_": {
+				"properties": {},
+				"additionalProperties": {},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"CreateWorkflowExecutionRequest": {
+				"properties": {
+					"projectId": {
+						"type": "string"
+					},
+					"metadata": {
+						"properties": {
+							"inputParameters": {
+								"$ref": "#/components/schemas/Record_string.any_"
+							},
+							"triggeredBy": {
+								"type": "string",
+								"enum": [
+									"manual",
+									"api",
+									"schedule"
+								]
+							},
+							"workflowVersion": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"projectId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowExecutionStatus": {
+				"type": "string",
+				"enum": [
+					"pending",
+					"initializing",
+					"running",
+					"paused",
+					"completed",
+					"failed",
+					"cancelled"
+				],
+				"description": "Workflow execution status"
+			},
+			"PhaseStatus": {
+				"type": "string",
+				"enum": [
+					"pending",
+					"initializing",
+					"running",
+					"completed",
+					"failed",
+					"skipped"
+				],
+				"description": "Phase execution status"
+			},
+			"StepExecution": {
+				"description": "Workflow step execution",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"stepId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"pending",
+							"running",
+							"completed",
+							"failed",
+							"skipped"
+						]
+					},
+					"taskId": {
+						"type": "string"
+					},
+					"startTime": {
+						"type": "string"
+					},
+					"endTime": {
+						"type": "string"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"output": {
+						"type": "string"
+					},
+					"error": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"stepId",
+					"name",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PhaseExecution": {
+				"description": "Workflow phase execution with progress tracking",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"phaseId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/PhaseStatus"
+					},
+					"steps": {
+						"items": {
+							"$ref": "#/components/schemas/StepExecution"
+						},
+						"type": "array"
+					},
+					"currentStep": {
+						"type": "number",
+						"format": "double"
+					},
+					"progress": {
+						"properties": {
+							"message": {
+								"type": "string"
+							},
+							"percentage": {
+								"type": "number",
+								"format": "double"
+							},
+							"total": {
+								"type": "number",
+								"format": "double"
+							},
+							"current": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"message",
+							"percentage",
+							"total",
+							"current"
+						],
+						"type": "object"
+					},
+					"startTime": {
+						"type": "string"
+					},
+					"endTime": {
+						"type": "string"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"error": {
+						"type": "string"
+					},
+					"outputSummary": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"phaseId",
+					"name",
+					"status",
+					"steps",
+					"currentStep",
+					"progress"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowExecution": {
+				"description": "Workflow execution record",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"workflowId": {
+						"type": "string"
+					},
+					"workflowName": {
+						"type": "string"
+					},
+					"projectId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/WorkflowExecutionStatus"
+					},
+					"phases": {
+						"items": {
+							"$ref": "#/components/schemas/PhaseExecution"
+						},
+						"type": "array"
+					},
+					"currentPhase": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalPhases": {
+						"type": "number",
+						"format": "double"
+					},
+					"progress": {
+						"properties": {
+							"message": {
+								"type": "string"
+							},
+							"percentage": {
+								"type": "number",
+								"format": "double"
+							},
+							"total": {
+								"type": "number",
+								"format": "double"
+							},
+							"current": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"message",
+							"percentage",
+							"total",
+							"current"
+						],
+						"type": "object"
+					},
+					"startTime": {
+						"type": "string"
+					},
+					"endTime": {
+						"type": "string"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"error": {
+						"type": "string"
+					},
+					"metadata": {
+						"properties": {
+							"inputParameters": {
+								"$ref": "#/components/schemas/Record_string.any_"
+							},
+							"triggeredBy": {
+								"type": "string",
+								"enum": [
+									"manual",
+									"api",
+									"schedule"
+								]
+							},
+							"workflowVersion": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"id",
+					"workflowId",
+					"workflowName",
+					"projectId",
+					"status",
+					"phases",
+					"currentPhase",
+					"totalPhases",
+					"progress",
+					"startTime"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskResponse": {
+				"properties": {
+					"taskId": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"taskId",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ExecuteTaskRequest": {
+				"properties": {
+					"stepId": {
+						"type": "string"
+					},
+					"prompt": {
+						"type": "string"
+					},
+					"parameters": {}
+				},
+				"required": [
+					"stepId",
+					"prompt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ExecuteAdhocTaskRequest": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"prompt": {
+						"type": "string"
+					},
+					"parameters": {},
+					"taskType": {
+						"type": "string",
+						"enum": [
+							"claude",
+							"qwen",
+							"bash"
+						]
+					},
+					"contextMemoryIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"title",
+					"prompt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskLimitResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"sandboxId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"limit",
+					"sandboxId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SetTaskLimitRequest": {
+				"properties": {
+					"limit": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"limit"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"QueueStatusResponse": {
+				"properties": {
+					"pending": {
+						"type": "number",
+						"format": "double"
+					},
+					"running": {
+						"type": "number",
+						"format": "double"
+					},
+					"projectId": {
+						"type": "string"
+					},
+					"sandboxId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"pending",
+					"running",
+					"projectId",
+					"sandboxId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskCancellationResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"taskId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"taskId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkflowStepExecutionResponse": {
+				"properties": {
+					"taskId": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stepId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"taskId",
+					"message",
+					"stepId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ExecuteWorkflowStepRequest": {
+				"properties": {
+					"additionalInput": {
+						"type": "string"
+					},
+					"parameters": {}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TaskContextResponse": {
+				"properties": {
+					"injectedMemories": {
+						"items": {},
+						"type": "array"
+					},
+					"generatedMemory": {},
+					"activeDialog": {},
+					"usage": {
+						"properties": {
+							"generated": {
+								"type": "number",
+								"format": "double"
+							},
+							"injected": {
+								"type": "number",
+								"format": "double"
+							},
+							"retrieved": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"generated",
+							"injected",
+							"retrieved"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"injectedMemories",
+					"generatedMemory",
+					"activeDialog",
+					"usage"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SaveTaskOutputResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"memory": {}
+				},
+				"required": [
+					"message",
+					"memory"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SaveTaskOutputRequest": {
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string"
+					},
+					"summary": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetRelevantContextResponse": {
+				"properties": {
+					"memories": {
+						"items": {},
+						"type": "array"
+					}
+				},
+				"required": [
+					"memories"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetRelevantContextRequest": {
+				"properties": {
+					"prompt": {
+						"type": "string"
+					},
+					"maxMemories": {
+						"type": "number",
+						"format": "double"
+					},
+					"types": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"includeWorkspace": {
+						"type": "boolean"
+					},
+					"includeOrg": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"prompt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserPreferences": {
+				"properties": {
+					"theme": {
+						"type": "string",
+						"enum": [
+							"light",
+							"dark"
+						]
+					},
+					"language": {
+						"type": "string"
+					},
+					"notifications": {
+						"properties": {
+							"push": {
+								"type": "boolean"
+							},
+							"email": {
+								"type": "boolean"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SettingsResponse": {
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"preferences": {
+						"$ref": "#/components/schemas/UserPreferences"
+					},
+					"gitDisplayName": {
+						"type": "string"
+					},
+					"gitEmail": {
+						"type": "string"
+					},
+					"dockerImage": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"userId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateSettingsRequest": {
+				"properties": {
+					"gitDisplayName": {
+						"type": "string"
+					},
+					"gitEmail": {
+						"type": "string"
+					},
+					"dockerImage": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SandboxPortResponse": {
+				"properties": {
+					"sandboxPort": {
+						"type": "number",
+						"format": "double"
+					},
+					"hostPort": {
+						"type": "number",
+						"format": "double"
+					},
+					"protocol": {
+						"type": "string",
+						"enum": [
+							"tcp",
+							"udp"
+						]
+					}
+				},
+				"required": [
+					"sandboxPort",
+					"protocol"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SandboxInfoResponse": {
+				"properties": {
+					"sandboxId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"running",
+							"stopped",
+							"paused",
+							"exited",
+							"removing",
+							"dead",
+							"created"
+						]
+					},
+					"ports": {
+						"items": {
+							"$ref": "#/components/schemas/SandboxPortResponse"
+						},
+						"type": "array"
+					},
+					"ip": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"sandboxId",
+					"name",
+					"image",
+					"status",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SandboxCreationResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"folderMapping": {
+						"type": "string"
+					},
+					"workingDir": {
+						"type": "string"
+					},
+					"projectId": {
+						"type": "string"
+					},
+					"aiConfig": {}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateSandboxRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"folderMapping": {
+						"type": "string"
+					},
+					"projectId": {
+						"type": "string"
+					},
+					"aiConfig": {}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AsyncOperationResponse": {
+				"properties": {
+					"operationId": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"operationId",
+					"status",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SandboxOperationType": {
+				"type": "string",
+				"enum": [
+					"create",
+					"start",
+					"stop",
+					"restart",
+					"delete",
+					"pull_image"
+				],
+				"description": "Sandbox operation types"
+			},
+			"OperationStatus": {
+				"type": "string",
+				"enum": [
+					"pending",
+					"in_progress",
+					"pulling_image",
+					"creating_sandbox",
+					"starting_sandbox",
+					"stopping_sandbox",
+					"completed",
+					"failed",
+					"cancelled"
+				],
+				"description": "Sandbox operation status"
+			},
+			"OperationStep": {
+				"description": "Operation step for detailed progress tracking",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"pending",
+							"running",
+							"completed",
+							"failed"
+						]
+					},
+					"startTime": {
+						"type": "string"
+					},
+					"endTime": {
+						"type": "string"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"message": {
+						"type": "string"
+					},
+					"error": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SandboxOperation": {
+				"description": "Sandbox operation record",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/SandboxOperationType"
+					},
+					"status": {
+						"$ref": "#/components/schemas/OperationStatus"
+					},
+					"sandboxId": {
+						"type": "string"
+					},
+					"sandboxName": {
+						"type": "string"
+					},
+					"projectId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"progress": {
+						"properties": {
+							"message": {
+								"type": "string"
+							},
+							"percentage": {
+								"type": "number",
+								"format": "double"
+							},
+							"total": {
+								"type": "number",
+								"format": "double"
+							},
+							"current": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"message",
+							"percentage",
+							"total",
+							"current"
+						],
+						"type": "object"
+					},
+					"error": {
+						"type": "string"
+					},
+					"startTime": {
+						"type": "string"
+					},
+					"endTime": {
+						"type": "string"
+					},
+					"duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"steps": {
+						"items": {
+							"$ref": "#/components/schemas/OperationStep"
+						},
+						"type": "array"
+					},
+					"metadata": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					}
+				},
+				"required": [
+					"id",
+					"type",
+					"status",
+					"progress",
+					"startTime",
+					"steps"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CancelOperationResponse": {
+				"properties": {
+					"operationId": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"operationId",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BrowseDirectoriesResponse": {
+				"properties": {
+					"currentPath": {
+						"type": "string"
+					},
+					"directories": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"currentPath",
+					"directories"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BrowseDirectoriesRequest": {
+				"properties": {
+					"currentPath": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ListFoldersResponse": {
+				"properties": {
+					"folders": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"folders"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HealthResponse": {
+				"properties": {
+					"status": {
+						"type": "string"
+					},
+					"uptime": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"status",
+					"uptime"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateMemoryRequest": {
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"memory_type": {
+						"type": "string"
+					},
+					"visibility": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"source": {},
+					"custom": {}
+				},
+				"required": [
+					"content",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpsertMemoryRequest": {
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"memory_type": {
+						"type": "string"
+					},
+					"visibility": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"source": {},
+					"custom": {}
+				},
+				"required": [
+					"content",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateMemoryRequest": {
+				"properties": {
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SearchMemoriesRequest": {
+				"properties": {
+					"query": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"include_inherited": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"query",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ImportDocumentRequest": {
+				"properties": {
+					"file_path": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"memory_type": {
+						"type": "string"
+					},
+					"visibility": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"chunk_content": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"file_path",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ImportDocumentContentRequest": {
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"file_path": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"memory_type": {
+						"type": "string"
+					},
+					"visibility": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"chunk_content": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"content",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ImportFolderRequest": {
+				"properties": {
+					"folder_path": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"recursive": {
+						"type": "boolean"
+					},
+					"file_extensions": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"folder_path",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SyncFileRequest": {
+				"properties": {
+					"file_path": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"file_path",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SyncFolderRequest": {
+				"properties": {
+					"folder_path": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"scope_id": {
+						"type": "string"
+					},
+					"recursive": {
+						"type": "boolean"
+					},
+					"file_extensions": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"folder_path",
+					"scope",
+					"scope_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CaptureTaskDialogRequest": {
+				"properties": {
+					"projectId": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					},
+					"metadata": {}
+				},
+				"required": [
+					"projectId",
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginResponse": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"token": {
+						"type": "string"
+					},
+					"user": {
+						"properties": {
+							"username": {
+								"type": "string"
+							},
+							"id": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"username",
+							"id"
+						],
+						"type": "object"
+					},
+					"error": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginRequest": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LogoutResponse": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"success",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RefreshResponse": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"success",
+					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VerifyResponse": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"user": {
+						"properties": {
+							"username": {
+								"type": "string"
+							},
+							"id": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"username",
+							"id"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"success",
+					"user"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "AInTandem Orchestrator API",
+		"version": "0.5.1-alpha.1",
+		"description": "API for the orchestrator that manages workflows, tasks, containers, and context in the AInTandem platform",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/organizations": {
+			"get": {
+				"operationId": "ListOrganizations",
+				"responses": {
+					"200": {
+						"description": "List of organizations",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all organizations",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateOrganization",
+				"responses": {
+					"201": {
+						"description": "Organization created successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Create a new organization",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateOrganizationRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/organizations/{id}": {
+			"get": {
+				"operationId": "GetOrganization",
+				"responses": {
+					"200": {
+						"description": "Organization details",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get a specific organization",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateOrganization",
+				"responses": {
+					"200": {
+						"description": "Organization updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Update an organization",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateOrganizationRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteOrganization",
+				"responses": {
+					"204": {
+						"description": "Organization deleted successfully"
+					}
+				},
+				"description": "Delete an organization",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/organizations/{organizationId}/workspaces": {
+			"get": {
+				"operationId": "ListWorkspacesInOrganization",
+				"responses": {
+					"200": {
+						"description": "List of workspaces",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List workspaces in an organization",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "organizationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateWorkspace",
+				"responses": {
+					"201": {
+						"description": "Workspace created successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Create a new workspace",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "organizationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateWorkspaceRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/workspaces": {
+			"get": {
+				"operationId": "ListAllWorkspaces",
+				"responses": {
+					"200": {
+						"description": "List of workspaces",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all workspaces (across all organizations)",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/workspaces/{id}": {
+			"get": {
+				"operationId": "GetWorkspace",
+				"responses": {
+					"200": {
+						"description": "Workspace details",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get a specific workspace",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateWorkspace",
+				"responses": {
+					"200": {
+						"description": "Workspace updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Update a workspace",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateWorkspaceRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteWorkspace",
+				"responses": {
+					"204": {
+						"description": "Workspace deleted successfully"
+					}
+				},
+				"description": "Delete a workspace",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workspaces/{workspaceId}/projects": {
+			"get": {
+				"operationId": "ListProjectsInWorkspace",
+				"responses": {
+					"200": {
+						"description": "List of projects",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List projects in a workspace",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "workspaceId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateProject",
+				"responses": {
+					"201": {
+						"description": "Project created successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Create a new project",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "workspaceId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateProjectRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects": {
+			"get": {
+				"operationId": "ListAllProjects",
+				"responses": {
+					"200": {
+						"description": "List of projects",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all projects (across all workspaces)",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/projects/{id}": {
+			"get": {
+				"operationId": "GetProject",
+				"responses": {
+					"200": {
+						"description": "Project details",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get a specific project",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateProject",
+				"responses": {
+					"200": {
+						"description": "Project updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Update a project",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateProjectRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteProject",
+				"responses": {
+					"204": {
+						"description": "Project deleted successfully"
+					}
+				},
+				"description": "Delete a project",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "- Project ID",
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "- Whether to delete the project folder (default: false)",
+						"in": "query",
+						"name": "deleteFolder",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{id}/move": {
+			"post": {
+				"operationId": "MoveProject",
+				"responses": {
+					"200": {
+						"description": "Project moved successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Move a project to another workspace",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MoveProjectRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects/{id}/workflow": {
+			"get": {
+				"operationId": "GetWorkflowState",
+				"responses": {
+					"200": {
+						"description": "Workflow state",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get workflow state for a project",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateWorkflowState",
+				"responses": {
+					"200": {
+						"description": "Workflow state updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Update workflow state for a project",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateWorkflowStateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects/{id}/workflow/step/{stepId}": {
+			"put": {
+				"operationId": "UpdateStepStatus",
+				"responses": {
+					"200": {
+						"description": "Step status updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Update a single step status",
+				"tags": [
+					"Project Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "stepId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateStepStatusRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/workflows": {
+			"get": {
+				"operationId": "ListWorkflows",
+				"responses": {
+					"200": {
+						"description": "List of workflows",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/WorkflowResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all workflows with optional status filter",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"enum": [
+								"published",
+								"draft",
+								"archived"
+							]
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateWorkflow",
+				"responses": {
+					"201": {
+						"description": "Workflow created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create new workflow (starts as Draft)",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateWorkflowRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/workflows/{id}": {
+			"get": {
+				"operationId": "GetWorkflow",
+				"responses": {
+					"200": {
+						"description": "Workflow details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get specific workflow by ID",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateWorkflow",
+				"responses": {
+					"200": {
+						"description": "Workflow updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update workflow\nIf workflow is Published, creates a new version automatically",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateWorkflowRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteWorkflow",
+				"responses": {
+					"204": {
+						"description": "Workflow deleted successfully"
+					}
+				},
+				"description": "Delete workflow\nCannot delete templates or workflows in use by projects",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/{id}/status": {
+			"patch": {
+				"operationId": "ChangeWorkflowStatus",
+				"responses": {
+					"200": {
+						"description": "Workflow status updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Change workflow status (Publish, Archive, back to Draft)",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChangeWorkflowStatusRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/workflows/{id}/clone": {
+			"post": {
+				"operationId": "CloneWorkflow",
+				"responses": {
+					"201": {
+						"description": "Workflow cloned successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Clone workflow for customization",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CloneWorkflowRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/workflows/{id}/versions": {
+			"get": {
+				"operationId": "ListWorkflowVersions",
+				"responses": {
+					"200": {
+						"description": "List of workflow versions",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/WorkflowResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all versions for a workflow",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/versions/{versionId}": {
+			"get": {
+				"operationId": "GetWorkflowVersion",
+				"responses": {
+					"200": {
+						"description": "Workflow version details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get specific workflow version by ID",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "versionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/{workflowId}/executions": {
+			"post": {
+				"operationId": "CreateWorkflowExecution",
+				"responses": {
+					"202": {
+						"description": "Workflow execution created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowExecutionResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new workflow execution",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "workflowId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateWorkflowExecutionRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/workflows/executions/{executionId}/start": {
+			"post": {
+				"operationId": "StartWorkflowExecution",
+				"responses": {
+					"200": {
+						"description": "Workflow execution started",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Start a workflow execution",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "executionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/executions/{executionId}": {
+			"get": {
+				"operationId": "GetWorkflowExecution",
+				"responses": {
+					"200": {
+						"description": "Workflow execution details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowExecution"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get workflow execution status",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "executionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/projects/{projectId}/executions": {
+			"get": {
+				"operationId": "GetProjectWorkflowExecutions",
+				"responses": {
+					"200": {
+						"description": "List of workflow executions",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"executions": {
+											"items": {
+												"$ref": "#/components/schemas/WorkflowExecution"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"executions"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get workflow executions for a project",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				]
+			}
+		},
+		"/workflows/executions/{executionId}/pause": {
+			"post": {
+				"operationId": "PauseWorkflowExecution",
+				"responses": {
+					"200": {
+						"description": "Workflow execution paused",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Pause a running workflow execution",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "executionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/executions/{executionId}/resume": {
+			"post": {
+				"operationId": "ResumeWorkflowExecution",
+				"responses": {
+					"200": {
+						"description": "Workflow execution resumed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Resume a paused workflow execution",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "executionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/workflows/executions/{executionId}/cancel": {
+			"post": {
+				"operationId": "CancelWorkflowExecution",
+				"responses": {
+					"200": {
+						"description": "Workflow execution cancelled",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Cancel a workflow execution",
+				"tags": [
+					"Workflow Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "executionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{projectId}/tasks": {
+			"post": {
+				"operationId": "ExecuteTask",
+				"responses": {
+					"201": {
+						"description": "Task started successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TaskResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Execute a new task in the project's sandbox",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ExecuteTaskRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetProjectTasks",
+				"responses": {
+					"200": {
+						"description": "List of tasks",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get task history for a project with optional filters",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"enum": [
+								"workflow",
+								"adhoc"
+							]
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{projectId}/tasks/adhoc": {
+			"post": {
+				"operationId": "ExecuteAdhocTask",
+				"responses": {
+					"201": {
+						"description": "Ad-hoc task started successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TaskResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Execute an ad-hoc task (single-use task)",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ExecuteAdhocTaskRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects/{projectId}/tasks/{taskId}": {
+			"get": {
+				"operationId": "GetTaskDetails",
+				"responses": {
+					"200": {
+						"description": "Task details",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get specific task details",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "taskId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{projectId}/task-limits": {
+			"post": {
+				"operationId": "SetTaskLimit",
+				"responses": {
+					"200": {
+						"description": "Task limit set successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TaskLimitResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Set task limit for project's sandbox",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SetTaskLimitRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects/{projectId}/task-queue-status": {
+			"get": {
+				"operationId": "GetQueueStatus",
+				"responses": {
+					"200": {
+						"description": "Queue status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/QueueStatusResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get queue status for project's sandbox",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{projectId}/tasks/{taskId}/cancel": {
+			"post": {
+				"operationId": "CancelTask",
+				"responses": {
+					"200": {
+						"description": "Task cancelled successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TaskCancellationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Cancel a queued task",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "taskId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{projectId}/workflow/steps/{stepId}/execute": {
+			"post": {
+				"operationId": "ExecuteWorkflowStep",
+				"responses": {
+					"201": {
+						"description": "Workflow step task started successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WorkflowStepExecutionResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Execute a workflow step as a task",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "stepId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ExecuteWorkflowStepRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects/{projectId}/tasks/{taskId}/context": {
+			"get": {
+				"operationId": "GetTaskContext",
+				"responses": {
+					"200": {
+						"description": "Task context information",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TaskContextResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get context information for a specific task",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "taskId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{projectId}/tasks/{taskId}/context/save": {
+			"post": {
+				"operationId": "SaveTaskOutputAsContext",
+				"responses": {
+					"201": {
+						"description": "Task output saved as context",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SaveTaskOutputResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Manually save task output as a context memory",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "taskId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SaveTaskOutputRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/projects/{projectId}/tasks/context/relevant": {
+			"post": {
+				"operationId": "GetRelevantContext",
+				"responses": {
+					"200": {
+						"description": "Relevant context memories",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GetRelevantContextResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get relevant context for a task prompt (used by frontend for suggestions)",
+				"tags": [
+					"Task Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GetRelevantContextRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/settings": {
+			"get": {
+				"operationId": "GetUserSettings",
+				"responses": {
+					"200": {
+						"description": "User settings retrieved successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SettingsResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get user settings",
+				"tags": [
+					"Settings"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"put": {
+				"operationId": "UpdateUserSettings",
+				"responses": {
+					"200": {
+						"description": "User settings updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SettingsResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update user settings",
+				"tags": [
+					"Settings"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateSettingsRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/flexy": {
+			"get": {
+				"operationId": "ListSandboxes",
+				"responses": {
+					"200": {
+						"description": "List of sandboxes",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/SandboxInfoResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all Docker sandboxes managed by the orchestrator",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateSandbox",
+				"responses": {
+					"201": {
+						"description": "Sandbox created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SandboxCreationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new Docker sandbox for a project",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateSandboxRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/flexy/{id}/start": {
+			"post": {
+				"operationId": "StartSandbox",
+				"responses": {
+					"204": {
+						"description": "Sandbox started successfully"
+					}
+				},
+				"description": "Start a Docker sandbox by ID",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/{id}/stop": {
+			"post": {
+				"operationId": "StopSandbox",
+				"responses": {
+					"204": {
+						"description": "Sandbox stopped successfully"
+					}
+				},
+				"description": "Stop a Docker sandbox by ID",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/{id}": {
+			"delete": {
+				"operationId": "DeleteSandbox",
+				"responses": {
+					"204": {
+						"description": "Sandbox deleted successfully"
+					}
+				},
+				"description": "Delete a Docker sandbox by ID",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/{id}/start-async": {
+			"post": {
+				"operationId": "StartSandboxAsync",
+				"responses": {
+					"202": {
+						"description": "Sandbox start operation accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AsyncOperationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Start a Docker sandbox asynchronously with progress tracking",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/{id}/stop-async": {
+			"post": {
+				"operationId": "StopSandboxAsync",
+				"responses": {
+					"202": {
+						"description": "Sandbox stop operation accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AsyncOperationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Stop a Docker sandbox asynchronously with progress tracking",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/{id}/restart-async": {
+			"post": {
+				"operationId": "RestartSandboxAsync",
+				"responses": {
+					"202": {
+						"description": "Sandbox restart operation accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AsyncOperationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Restart a Docker sandbox asynchronously with progress tracking",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/{id}/async": {
+			"delete": {
+				"operationId": "DeleteSandboxAsync",
+				"responses": {
+					"202": {
+						"description": "Sandbox delete operation accepted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AsyncOperationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Delete a Docker sandbox asynchronously with progress tracking",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/operations/{operationId}": {
+			"get": {
+				"operationId": "GetOperationStatus",
+				"responses": {
+					"200": {
+						"description": "Operation status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SandboxOperation"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get the status of an asynchronous sandbox operation",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "operationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/operations/{operationId}/cancel": {
+			"post": {
+				"operationId": "CancelOperation",
+				"responses": {
+					"200": {
+						"description": "Operation cancelled",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelOperationResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Cancel an asynchronous sandbox operation",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "operationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/flexy/projects/{projectId}/operations": {
+			"get": {
+				"operationId": "GetProjectOperations",
+				"responses": {
+					"200": {
+						"description": "List of operations",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"operations": {
+											"items": {
+												"$ref": "#/components/schemas/SandboxOperation"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"operations"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get operations for a specific project",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "projectId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				]
+			}
+		},
+		"/host/directories": {
+			"post": {
+				"operationId": "BrowseDirectories",
+				"responses": {
+					"200": {
+						"description": "Directory listing",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BrowseDirectoriesResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Browse host directories (legacy)",
+				"tags": [
+					"Host"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BrowseDirectoriesRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/folders/organizations": {
+			"get": {
+				"operationId": "ListOrganizationFolders",
+				"responses": {
+					"200": {
+						"description": "List of organization folders",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListFoldersResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "List folders at BASE_ROOT level (for organizations)",
+				"tags": [
+					"Host"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/folders/workspaces/{organizationId}": {
+			"get": {
+				"operationId": "ListWorkspaceFolders",
+				"responses": {
+					"200": {
+						"description": "List of workspace folders",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListFoldersResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "List folders within an organization (for workspaces)",
+				"tags": [
+					"Host"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "organizationId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/folders/projects/{workspaceId}": {
+			"get": {
+				"operationId": "ListProjectFolders",
+				"responses": {
+					"200": {
+						"description": "List of project folders",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListFoldersResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "List folders within a workspace (for projects)",
+				"tags": [
+					"Host"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "workspaceId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/health": {
+			"get": {
+				"operationId": "Health",
+				"responses": {
+					"200": {
+						"description": "Server is healthy",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HealthResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Health check endpoint for the API server",
+				"tags": [
+					"Health"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/context/memories": {
+			"post": {
+				"operationId": "CreateMemory",
+				"responses": {
+					"201": {
+						"description": "Memory created successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Create a new memory",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateMemoryRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "ListMemories",
+				"responses": {
+					"200": {
+						"description": "List of memories",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get all memories with optional filters",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "scope",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "scope_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "memory_type",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "tags",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 100,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/context/memories/upsert": {
+			"put": {
+				"operationId": "UpsertMemory",
+				"responses": {
+					"200": {
+						"description": "Memory upserted successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Create or update memory by unique identifier\nThis endpoint prevents duplicate memories from external sources like CoSpec AI",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "uniqueKey",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpsertMemoryRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/memories/{id}": {
+			"get": {
+				"operationId": "GetMemory",
+				"responses": {
+					"200": {
+						"description": "Memory details",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get a specific memory by ID",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateMemory",
+				"responses": {
+					"200": {
+						"description": "Memory updated successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Update a memory",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateMemoryRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteMemory",
+				"responses": {
+					"204": {
+						"description": "Memory deleted successfully"
+					}
+				},
+				"description": "Delete a memory",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/context/search": {
+			"post": {
+				"operationId": "SearchMemories",
+				"responses": {
+					"200": {
+						"description": "Search results",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Semantic search for memories",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SearchMemoriesRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/{scope}/{scopeId}/memories": {
+			"get": {
+				"operationId": "GetScopeMemories",
+				"responses": {
+					"200": {
+						"description": "List of memories for the scope",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get memories for a specific scope with optional hierarchical inheritance",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scope",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "scopeId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "memory_type",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "tags",
+						"required": false,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 100,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "include_inherited",
+						"required": false,
+						"schema": {
+							"default": "false",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/context/memories/{id}/similar": {
+			"get": {
+				"operationId": "GetSimilarMemories",
+				"responses": {
+					"200": {
+						"description": "Similar memories",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get similar memories (semantic search based on memory content)",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/context/stats": {
+			"get": {
+				"operationId": "GetStats",
+				"responses": {
+					"200": {
+						"description": "Context system statistics",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get overall memory statistics",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/context/stats/{scope}/{scopeId}": {
+			"get": {
+				"operationId": "GetScopeStats",
+				"responses": {
+					"200": {
+						"description": "Statistics for the scope",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get memory statistics for a specific scope",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scope",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "scopeId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/context/health": {
+			"get": {
+				"operationId": "HealthCheck",
+				"responses": {
+					"200": {
+						"description": "Context system is healthy",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Health check for the context system",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/context/info": {
+			"get": {
+				"operationId": "GetContextInfo",
+				"responses": {
+					"200": {
+						"description": "Context system information",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get context system information",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/context/import/document": {
+			"post": {
+				"operationId": "ImportDocument",
+				"responses": {
+					"201": {
+						"description": "Document imported successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Import a document file to the context system",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ImportDocumentRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/import/document/content": {
+			"post": {
+				"operationId": "ImportDocumentContent",
+				"responses": {
+					"201": {
+						"description": "Document content imported successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Import document content directly (no filesystem access needed)",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ImportDocumentContentRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/import/folder": {
+			"post": {
+				"operationId": "ImportFolder",
+				"responses": {
+					"201": {
+						"description": "Folder imported successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Import all documents from a folder",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ImportFolderRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/sync/file": {
+			"post": {
+				"operationId": "SyncFile",
+				"responses": {
+					"200": {
+						"description": "File synced successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Sync a single file (re-import if changed)",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SyncFileRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/sync/folder": {
+			"post": {
+				"operationId": "SyncFolder",
+				"responses": {
+					"200": {
+						"description": "Folder synced successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Sync all files in a folder",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SyncFolderRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/sync/stats": {
+			"get": {
+				"operationId": "GetSyncStats",
+				"responses": {
+					"200": {
+						"description": "Sync statistics",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get file sync statistics",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "scope",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "scope_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/context/sync/files": {
+			"get": {
+				"operationId": "GetTrackedFiles",
+				"responses": {
+					"200": {
+						"description": "List of tracked files",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Get list of tracked files",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "scope",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "scope_id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/context/capture/task/{taskId}": {
+			"post": {
+				"operationId": "CaptureTaskDialog",
+				"responses": {
+					"201": {
+						"description": "Task dialog captured successfully",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Auto-capture task dialog to context",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "taskId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CaptureTaskDialogRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/context/sync/hierarchy": {
+			"post": {
+				"operationId": "SyncHierarchy",
+				"responses": {
+					"200": {
+						"description": "Hierarchy resync completed",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"description": "Trigger full hierarchy resync to context-manager",
+				"tags": [
+					"Context Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Login successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Authenticate user credentials and return JWT tokens",
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/logout": {
+			"post": {
+				"operationId": "Logout",
+				"responses": {
+					"200": {
+						"description": "Logged out successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LogoutResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Invalidate the refresh token",
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/auth/refresh": {
+			"post": {
+				"operationId": "Refresh",
+				"responses": {
+					"200": {
+						"description": "Token refreshed successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RefreshResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Refresh the access token using the refresh token",
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/auth/verify": {
+			"get": {
+				"operationId": "Verify",
+				"responses": {
+					"200": {
+						"description": "Token is valid",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VerifyResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Verify the validity of the access token",
+				"tags": [
+					"Authentication"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/api"
+		}
+	],
+	"tags": [
+		{
+			"name": "Authentication",
+			"description": "Authentication endpoints"
+		},
+		{
+			"name": "Container Management",
+			"description": "Container management endpoints"
+		},
+		{
+			"name": "Project Management",
+			"description": "Project management endpoints"
+		},
+		{
+			"name": "Workflow Management",
+			"description": "Workflow management endpoints"
+		},
+		{
+			"name": "Task Management",
+			"description": "Task management endpoints"
+		},
+		{
+			"name": "Context Management",
+			"description": "Context management endpoints"
+		},
+		{
+			"name": "Settings",
+			"description": "User settings endpoints"
+		},
+		{
+			"name": "Host",
+			"description": "Host-related endpoints"
+		}
+	]
+}

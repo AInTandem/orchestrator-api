@@ -1891,8 +1891,7 @@
 					}
 				},
 				"required": [
-					"success",
-					"user"
+					"success"
 				],
 				"type": "object",
 				"additionalProperties": false

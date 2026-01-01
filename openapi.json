@@ -230,9 +230,6 @@
 					"title": {
 						"type": "string"
 					},
-					"titleEn": {
-						"type": "string"
-					},
 					"description": {
 						"type": "string"
 					},
@@ -252,7 +249,6 @@
 				"required": [
 					"id",
 					"title",
-					"titleEn",
 					"description",
 					"color",
 					"steps"
@@ -1780,6 +1776,9 @@
 					"token": {
 						"type": "string"
 					},
+					"refreshToken": {
+						"type": "string"
+					},
 					"user": {
 						"properties": {
 							"username": {
@@ -1844,12 +1843,26 @@
 					},
 					"token": {
 						"type": "string"
+					},
+					"refreshToken": {
+						"type": "string"
+					},
+					"error": {
+						"type": "string"
 					}
 				},
 				"required": [
-					"success",
-					"token"
+					"success"
 				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RefreshRequest": {
+				"properties": {
+					"refreshToken": {
+						"type": "string"
+					}
+				},
 				"type": "object",
 				"additionalProperties": false
 			},
@@ -1872,11 +1885,26 @@
 							"id"
 						],
 						"type": "object"
+					},
+					"error": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"success",
 					"user"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VerifyTokenRequest": {
+				"properties": {
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"token"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -5457,17 +5485,27 @@
 						}
 					}
 				},
-				"description": "Refresh the access token using the refresh token",
+				"description": "Refresh the access token using the refresh token\nThe refresh token can be provided in the request body or in a cookie",
 				"tags": [
 					"Authentication"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": false,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RefreshRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/auth/verify": {
 			"get": {
-				"operationId": "Verify",
+				"operationId": "VerifyCurrentToken",
 				"responses": {
 					"200": {
 						"description": "Token is valid",
@@ -5480,7 +5518,7 @@
 						}
 					}
 				},
-				"description": "Verify the validity of the access token",
+				"description": "Verify the validity of the current access token (from Authorization header)\nUse this to check if the current user is authenticated",
 				"tags": [
 					"Authentication"
 				],
@@ -5490,6 +5528,37 @@
 					}
 				],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "VerifyToken",
+				"responses": {
+					"200": {
+						"description": "Token is valid",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VerifyResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Verify the validity of an access token (provided in request body)\nUse this for backend-to-backend token validation",
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/VerifyTokenRequest"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

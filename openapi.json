@@ -1189,12 +1189,80 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"SandboxImageResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"repository": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"tags": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"icon": {
+						"type": "string"
+					},
+					"isDefault": {
+						"type": "boolean"
+					},
+					"platform": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"repository"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SandboxImagesListResponse": {
+				"properties": {
+					"images": {
+						"items": {
+							"$ref": "#/components/schemas/SandboxImageResponse"
+						},
+						"type": "array"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"defaultImageId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"images",
+					"total",
+					"defaultImageId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"SandboxCreationResponse": {
 				"properties": {
 					"id": {
 						"type": "string"
 					},
 					"name": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"imageName": {
 						"type": "string"
 					},
 					"folderMapping": {
@@ -1210,7 +1278,8 @@
 				},
 				"required": [
 					"id",
-					"name"
+					"name",
+					"image"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -1226,7 +1295,10 @@
 					"projectId": {
 						"type": "string"
 					},
-					"aiConfig": {}
+					"aiConfig": {},
+					"imageName": {
+						"type": "string"
+					}
 				},
 				"type": "object",
 				"additionalProperties": false
@@ -4026,6 +4098,33 @@
 						}
 					}
 				}
+			}
+		},
+		"/flexy/images": {
+			"get": {
+				"operationId": "ListSandboxImages",
+				"responses": {
+					"200": {
+						"description": "List of available images",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SandboxImagesListResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "List all available sandbox images",
+				"tags": [
+					"Sandbox Management"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/flexy/{id}/start": {

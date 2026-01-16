@@ -17,4 +17,4 @@ Documentation is automatically published on:
 - New releases
 - Manual workflow dispatch
 
-Last updated: 
+Last updated: 2026-01-16T16:32:54Z

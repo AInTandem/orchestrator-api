@@ -1991,7 +1991,7 @@
 	},
 	"info": {
 		"title": "AInTandem Orchestrator API",
-		"version": "0.5.1-alpha.1",
+		"version": "0.6.0-alpha",
 		"description": "API for the orchestrator that manages workflows, tasks, containers, and context in the AInTandem platform",
 		"license": {
 			"name": "ISC"
